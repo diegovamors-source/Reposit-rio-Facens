@@ -1,0 +1,35 @@
+﻿<h1>Mural de Recados</h1>
+
+<ul>
+  @for (recado of recados; track $index) {
+    <li
+      [ngClass]="{'verde': recado.includes('grande') || recado.includes('Palestra'), 'azul': recado.includes('valsa') || recado.includes('moranguinhos')}"
+      (click)="selecionar(recado)">
+      {{ recado }}
+    </li>
+  }
+</ul>
+
+@if (recadoSelecionado) {
+  <div [ngClass]="{'lido': lido, 'nao-lido': !lido}">
+    <p>Recado: {{ recadoSelecionado }}</p>
+    <p>Status: {{ lido ? 'Lido' : 'Nao lido' }}</p>
+    <button (click)="mudarLeitura()">
+      {{ lido ? 'Marcar como Nao lido' : 'Marcar como Lido' }}
+    </button>
+    <button (click)="darLike()">Curtir</button>
+    <p>Curtidas: {{ curtidas }}</p>
+  </div>
+} @else {
+  <p>Nenhum recado selecionado.</p>
+}
+
+<input
+  type="text"
+  placeholder="Digite um novo recado"
+  [(ngModel)]="novoRecado"
+  (keyup.enter)="adicionar()">
+
+<button [disabled]="novoRecado === ''" (click)="adicionar()">
+  Publicar
+</button>
